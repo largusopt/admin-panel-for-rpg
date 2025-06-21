@@ -1,7 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.DTO.FilterDTO;
-import com.example.demo.PlayerMapper;
+import com.example.demo.service.PlayerMapper;
 import com.example.demo.filter.PlayerOrder;
 import com.example.demo.model.Player;
 import org.springframework.lang.Nullable;

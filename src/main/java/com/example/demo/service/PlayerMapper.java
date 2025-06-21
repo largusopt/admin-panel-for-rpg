@@ -1,14 +1,14 @@
-package com.example.demo;
+package com.example.demo.service;
 
 import com.example.demo.DTO.CreatePlayerRequest;
 import com.example.demo.DTO.CreatePlayerResponse;
 import com.example.demo.DTO.PlayerDto;
 import com.example.demo.model.Player;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Service
+@Component
 public class PlayerMapper {
     public Player toPlayerFromPlayerDTO(PlayerDto playerDto){
         Player player = new Player();
