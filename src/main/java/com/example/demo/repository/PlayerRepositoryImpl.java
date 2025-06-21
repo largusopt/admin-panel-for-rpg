@@ -59,7 +59,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 
 
          if (order != null){
-              stream.sorted(getComparator(order));
+             stream = stream.sorted(getComparator(order));
          }
          return stream.toList();
 
