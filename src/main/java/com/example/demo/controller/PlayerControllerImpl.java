@@ -1,9 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.DTO.*;
-import com.example.demo.PlayerMapper;
+import com.example.demo.service.PlayerMapper;
 import com.example.demo.filter.PlayerOrder;
-import com.example.demo.model.Player;
 import com.example.demo.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
