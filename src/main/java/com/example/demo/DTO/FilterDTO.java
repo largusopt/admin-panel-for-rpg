@@ -27,4 +27,5 @@ public class FilterDTO {
     private Integer maxExperience;
     private Integer minLevel;
     private Integer maxLevel;
+
 }

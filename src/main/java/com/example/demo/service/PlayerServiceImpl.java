@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +49,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public Integer getPlayersCount(FilterDTO filterDTO){
-       return playerRepository.getSortedPlayers(filterDTO, filterDTO.getName(), filterDTO.getTitle()).size();
+       return playerRepository.getPlayersCount(filterDTO);
     }
 
     @Override
@@ -93,15 +92,13 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public List<PlayerDto> getPlayersList(FilterDTO filterDTO, PlayerOrder playerOrder, Integer pageNumber, Integer pageSize) {
 
-        List<Player> playersList = playerRepository.getSortedPlayers(filterDTO, filterDTO.getName(), filterDTO.getTitle());
+        List<Player> playersList = playerRepository.getSortedPlayers(filterDTO, playerOrder);
           return playersList.stream()
-                .sorted(getComparator(playerOrder))
-                .skip(pageNumber*pageNumber)
+                .skip((long) pageNumber*pageSize)
                 .limit(pageSize)
                 .map(player -> playerMapper.toDTOPlayerFromPlayer(player))
                   .toList();
     }
-
 
     private void setLevel(Player player){
         int level = (int) Math.floor(Math.sqrt(2500 + 200 * player.getExperience()))/100;
@@ -111,15 +108,5 @@ public class PlayerServiceImpl implements PlayerService {
     private void setUntilNextLevel(Player player){
         int N = 50 * (player.getLevel() + 1) * (player.getLevel() + 2) - player.getExperience();
         player.setUntilNextLevel(N);
-    }
-
-    private Comparator<Player> getComparator(PlayerOrder order) {
-        return switch (order) {
-            case NAME -> Comparator.comparing(player -> player.getName());
-            case EXPERIENCE -> Comparator.comparing(player -> player.getExperience());
-            case BIRTHDAY -> Comparator.comparing(player -> player.getBirthday());
-            case LEVEL -> Comparator.comparing(player -> player.getLevel());
-            default -> Comparator.comparing(player -> player.getId());
-        };
     }
 }
