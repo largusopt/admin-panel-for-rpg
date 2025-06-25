@@ -13,7 +13,7 @@ public interface PlayerService {
      PlayerDto addPlayer(PlayerDto playerDto);  // PlayerDto .... (PlayerDto)
      List<PlayerDto> getPlayers();
      PlayerDto getPlayerById(Long id);
-     void deletePlayer(PlayerDto playerDto);
+     void deletePlayer(Long id);
      Integer getPlayersCount(FilterDTO filterDTO);
      PlayerDto updatePlayer (Long id, UpdateDTO updateDTO);
      List<PlayerDto> getPlayersList(FilterDTO filterDTO, PlayerOrder playerOrder, Integer pageNumber, Integer pageSize);

@@ -33,7 +33,7 @@ public class PlayerControllerImpl implements PlayerController {
         if ( playerService.getPlayerById(id) == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        playerService.deletePlayer(playerService.getPlayerById(id));
+        playerService.deletePlayer(id);
         return ResponseEntity.ok().build();
     }
 
