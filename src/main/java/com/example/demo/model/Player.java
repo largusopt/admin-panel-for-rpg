@@ -5,12 +5,19 @@ import com.example.demo.entity.Race;
 import lombok.*;
 
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.*;
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
+@Entity
+@Table(name = "player")
 public class Player {
     @Positive
+    @Id
     private Long id;
 
     @NotBlank

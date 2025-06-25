@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,13 +26,13 @@ public class PlayerServiceImpl implements PlayerService {
         Player player = playerMapper.toPlayerFromPlayerDTO(playerDto); //
         setLevel(player);
         setUntilNextLevel(player);
-        PlayerDto newPlayerDto = playerMapper.toDTOPlayerFromPlayer(playerRepository.addPlayer(player));
+        PlayerDto newPlayerDto = playerMapper.toDTOPlayerFromPlayer(playerRepository.save(player));
         return newPlayerDto;
     }
 
     @Override
     public List<PlayerDto> getPlayers(){
-       return playerRepository.getPlayers().stream().
+       return playerRepository.findAll().stream().
                map(player -> playerMapper.toDTOPlayerFromPlayer(player))
                .collect(Collectors.toList());
     }
@@ -39,10 +40,11 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     @Nullable
     public PlayerDto getPlayerById(Long id){
-       Player player = playerRepository.getPlayerById(id); // check null
-        if (player == null) {
-            return null;
-        }
+        Player player = playerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Player not found")); // check null
+//        if (player == null) {
+//            return null;
+//        }
         return playerMapper.toDTOPlayerFromPlayer(player);
     }
 
@@ -54,16 +56,18 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public void deletePlayer(PlayerDto playerDto) {
         Player player = playerMapper.toPlayerFromPlayerDTO(playerDto);
-        playerRepository.deletePlayer(player);
+        playerRepository.delete(player);
     }
 
     @Override
     @Nullable
     public PlayerDto updatePlayer (Long id, UpdateDTO updateDTO) {
-        Player player = playerRepository.getPlayerById(id); // нашла нужного игрока
-        if (player == null) {
-            return null;
-        }
+        Player player = playerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Player not found"));
+//        Player player = playerRepository.getPlayerById(id); // нашла нужного игрока
+//        if (player == null) {
+//            return null;
+//        }
         if (updateDTO.getName() != null){
             player.setName(updateDTO.getName());
         }
