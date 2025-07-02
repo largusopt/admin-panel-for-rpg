@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface PlayerService {
      PlayerDto addPlayer(PlayerDto playerDto);  // PlayerDto .... (PlayerDto)
-     List<PlayerDto> getPlayers();
+    // List<PlayerDto> getPlayers();
      PlayerDto getPlayerById(Long id);
      void deletePlayer(Long id);
      Integer getPlayersCount(FilterDTO filterDTO);
