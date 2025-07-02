@@ -27,5 +27,5 @@ public class UpdateDTO {
     @Max(value = 32503679904000000L, message = "Дата должна быть не позднее 31.12.3000" )
     private final Long birthday;
 
-    private final Boolean banned = false;
+    private final Boolean banned;
 }

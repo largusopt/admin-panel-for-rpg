@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,13 +29,6 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public List<PlayerDto> getPlayers(){
-       return playerRepository.getPlayers().stream().
-               map(player -> playerMapper.toDTOPlayerFromPlayer(player))
-               .collect(Collectors.toList());
-    }
-
-    @Override
     @Nullable
     public PlayerDto getPlayerById(Long id){
         Player player = playerRepository.getPlayerById(id); // нашла нужного игрока
@@ -49,7 +40,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public Integer getPlayersCount(FilterDTO filterDTO){
-       return playerRepository.getPlayersCount(filterDTO);
+       return playerRepository.getPlayersCount(filterDTO, null);
     }
 
     @Override
@@ -60,31 +51,7 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     @Nullable
     public PlayerDto updatePlayer (Long id, UpdateDTO updateDTO) {
-        Player player = playerRepository.getPlayerById(id); // нашла нужного игрока
-        if (player == null) {
-            return null;
-        }
-        if (updateDTO.getName() != null){
-            player.setName(updateDTO.getName());
-        }
-        if (updateDTO.getTitle() != null){
-            player.setTitle(updateDTO.getTitle());
-        }
-        if (updateDTO.getRace() != null){
-            player.setRace(updateDTO.getRace());
-        }
-        if (updateDTO.getProfession() != null){
-            player.setProfession(updateDTO.getProfession());
-        }
-        if (updateDTO.getBirthday() != null){
-            player.setBirthday(new Date(updateDTO.getBirthday()));
-        }
-        if (updateDTO.getBanned() != null){
-            player.setBanned(updateDTO.getBanned());
-        }
-        if (updateDTO.getExperience() != null){
-            player.setExperience(updateDTO.getExperience());
-        }
+        Player player = playerRepository.updatePlayer(id, updateDTO); // нашла нужного игрока
         return  playerMapper.toDTOPlayerFromPlayer(player);
     }
 
