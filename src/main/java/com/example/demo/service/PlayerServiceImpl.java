@@ -1,16 +1,13 @@
 package com.example.demo.service;
 
-import com.example.demo.DTO.FilterDTO;
+
 import com.example.demo.DTO.PlayerDto;
-import com.example.demo.DTO.UpdateDTO;
-import com.example.demo.filter.PlayerOrder;
 import com.example.demo.model.Player;
 import com.example.demo.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,68 +37,63 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     @Nullable
     public PlayerDto getPlayerById(Long id){
-        Player player = playerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Player not found")); // check null
-//        if (player == null) {
-//            return null;
+        Optional<Player> player = playerRepository.findById(id);// check null
+        if (player.isEmpty()) {
+            return null; // игрок не найден
+        }
+        return playerMapper.toDTOPlayerFromPlayer(player.get());
+    }
+
+//    @Override
+//    public Integer getPlayersCount(FilterDTO filterDTO){
+//       return playerRepository.getPlayersCount(filterDTO);
+//    }
+
+    @Override
+    public void deletePlayer(Long id) {
+        playerRepository.deleteById(id);
+    }
+
+    //@Override
+   // @Nullable
+//    public PlayerDto updatePlayer (Long id, UpdateDTO updateDTO) {
+//        Player player = playerRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Player not found"));
+//
+//        if (updateDTO.getName() != null){
+//            player.setName(updateDTO.getName());
 //        }
-        return playerMapper.toDTOPlayerFromPlayer(player);
-    }
-
-    @Override
-    public Integer getPlayersCount(FilterDTO filterDTO){
-       return playerRepository.getPlayersCount(filterDTO);
-    }
-
-    @Override
-    public void deletePlayer(PlayerDto playerDto) {
-        Player player = playerMapper.toPlayerFromPlayerDTO(playerDto);
-        playerRepository.delete(player);
-    }
-
-    @Override
-    @Nullable
-    public PlayerDto updatePlayer (Long id, UpdateDTO updateDTO) {
-        Player player = playerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Player not found"));
-//        Player player = playerRepository.getPlayerById(id); // нашла нужного игрока
-//        if (player == null) {
-//            return null;
+//        if (updateDTO.getTitle() != null){
+//            player.setTitle(updateDTO.getTitle());
 //        }
-        if (updateDTO.getName() != null){
-            player.setName(updateDTO.getName());
-        }
-        if (updateDTO.getTitle() != null){
-            player.setTitle(updateDTO.getTitle());
-        }
-        if (updateDTO.getRace() != null){
-            player.setRace(updateDTO.getRace());
-        }
-        if (updateDTO.getProfession() != null){
-            player.setProfession(updateDTO.getProfession());
-        }
-        if (updateDTO.getBirthday() != null){
-            player.setBirthday(new Date(updateDTO.getBirthday()));
-        }
-        if (updateDTO.getBanned() != null){
-            player.setBanned(updateDTO.getBanned());
-        }
-        if (updateDTO.getExperience() != null){
-            player.setExperience(updateDTO.getExperience());
-        }
-        return  playerMapper.toDTOPlayerFromPlayer(player);
-    }
+//        if (updateDTO.getRace() != null){
+//            player.setRace(updateDTO.getRace());
+//        }
+//        if (updateDTO.getProfession() != null){
+//            player.setProfession(updateDTO.getProfession());
+//        }
+//        if (updateDTO.getBirthday() != null){
+//            player.setBirthday(new Date(updateDTO.getBirthday()));
+//        }
+//        if (updateDTO.getBanned() != null){
+//            player.setBanned(updateDTO.getBanned());
+//        }
+//        if (updateDTO.getExperience() != null){
+//            player.setExperience(updateDTO.getExperience());
+//        }
+//        return  playerMapper.toDTOPlayerFromPlayer(player);
+//    }
 
-    @Override
-    public List<PlayerDto> getPlayersList(FilterDTO filterDTO, PlayerOrder playerOrder, Integer pageNumber, Integer pageSize) {
-
-        List<Player> playersList = playerRepository.getSortedPlayers(filterDTO, playerOrder);
-          return playersList.stream()
-                .skip((long) pageNumber*pageSize)
-                .limit(pageSize)
-                .map(player -> playerMapper.toDTOPlayerFromPlayer(player))
-                  .toList();
-    }
+//    @Override
+//    public List<PlayerDto> getPlayersList(FilterDTO filterDTO, PlayerOrder playerOrder, Integer pageNumber, Integer pageSize) {
+//
+//        List<Player> playersList = playerRepository.getSortedPlayers(filterDTO, playerOrder);
+//          return playersList.stream()
+//                .skip((long) pageNumber*pageSize)
+//                .limit(pageSize)
+//                .map(player -> playerMapper.toDTOPlayerFromPlayer(player))
+//                  .toList();
+//    }
 
     private void setLevel(Player player){
         int level = (int) Math.floor(Math.sqrt(2500 + 200 * player.getExperience()))/100;
