@@ -51,7 +51,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
     @Override
     public List<Player> getSortedPlayers(FilterDTO filterDTO, PlayerOrder order) {
          SqlBuilderResult sqlBuilderResult = buildFilteredQuery(filterDTO, order);
-         String sql = sqlBuilderResult.getSql();
+         String sql = sqlBuilderResult.getSql().replaceAll("%fields%", "*");
          List<Object> clausesParams = sqlBuilderResult.getClausesParams();
          return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Player.class), clausesParams.toArray());
     }
@@ -59,7 +59,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
     @Override
     public Integer getPlayersCount(FilterDTO filterDTO, PlayerOrder order){
         SqlBuilderResult sqlBuilderResult = buildFilteredQuery(filterDTO, order);
-        String sql = sqlBuilderResult.getSql().replaceFirst("SELECT \\*", "SELECT COUNT(*)");
+        String sql = sqlBuilderResult.getSql().replaceFirst("%fields%", "COUNT(*)");
         List<Object> clausesParams = sqlBuilderResult.getClausesParams();
         return jdbcTemplate.queryForObject(sql, Integer.class, clausesParams.toArray());
     }
@@ -107,7 +107,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
     }
 
     private SqlBuilderResult buildFilteredQuery(FilterDTO filterDTO, PlayerOrder order) {
-        String sql = "SELECT * FROM player";
+        String sql = "SELECT %fields% FROM player";
         List<Object> clausesParams = new ArrayList<>();
         List<String> clauses = new ArrayList<>();
 
@@ -156,10 +156,10 @@ public class PlayerRepositoryImpl implements PlayerRepository {
             clausesParams.add(filterDTO.getMaxLevel());
         }
          if (order != null){
-             sql = sql + "ORDER BY" + getOrderColumn(order);
+             sql = sql + " ORDER BY " + getOrderColumn(order);
          }
         if (!clauses.isEmpty()) {
-            sql = sql + "WHERE" + String.join("AND", clauses);
+            sql = sql + " WHERE " + String.join(" AND ", clauses);
         }
         return new SqlBuilderResult(sql,clausesParams);
     }
