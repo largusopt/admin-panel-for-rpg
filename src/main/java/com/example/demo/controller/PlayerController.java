@@ -28,5 +28,5 @@ public interface PlayerController {
     CreatePlayerResponse updatePlayer (@PathVariable("id") @Positive Long id, @RequestBody UpdateDTO updateDTO);
 
     @GetMapping()
-    List<CreatePlayerResponse> getPlayersList (FilterDTO filterDTO, @RequestParam(required = false, defaultValue = "ID") PlayerOrder playerOrder, @RequestParam(required = false, defaultValue = "0") @Positive Integer pageNumber, @RequestParam(required = false, defaultValue = "3") @Positive Integer pageSize);
+    List<CreatePlayerResponse> getPlayersList (FilterDTO filterDTO);
 }

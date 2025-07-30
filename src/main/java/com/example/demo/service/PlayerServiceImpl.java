@@ -56,12 +56,12 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public List<PlayerDto> getPlayersList(FilterDTO filterDTO, PlayerOrder playerOrder, Integer pageNumber, Integer pageSize) {
+    public List<PlayerDto> getPlayersList(FilterDTO filterDTO) {
 
-        List<Player> playersList = playerRepository.getSortedPlayers(filterDTO, playerOrder);
+        List<Player> playersList = playerRepository.getSortedPlayers(filterDTO, filterDTO.getOrder());
           return playersList.stream()
-                .skip((long) pageNumber*pageSize)
-                .limit(pageSize)
+                .skip((long) filterDTO.getPageNumber() * filterDTO.getPageSize())
+                .limit(filterDTO.getPageSize())
                 .map(player -> playerMapper.toDTOPlayerFromPlayer(player))
                   .toList();
     }

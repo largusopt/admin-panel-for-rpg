@@ -2,10 +2,12 @@ package com.example.demo.DTO;
 
 import com.example.demo.entity.Profession;
 import com.example.demo.entity.Race;
+import com.example.demo.filter.PlayerOrder;
 import lombok.Data;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 
 @Data
 public class FilterDTO {
@@ -27,5 +29,10 @@ public class FilterDTO {
     private Integer maxExperience;
     private Integer minLevel;
     private Integer maxLevel;
+    private PlayerOrder order = PlayerOrder.ID;
+    @Positive
+    private Integer pageNumber = 0;
+    @Positive
+    private Integer pageSize = 3;
 
 }

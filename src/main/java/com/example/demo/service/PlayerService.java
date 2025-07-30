@@ -16,7 +16,7 @@ public interface PlayerService {
      void deletePlayer(Long id);
      Integer getPlayersCount(FilterDTO filterDTO);
      PlayerDto updatePlayer (Long id, UpdateDTO updateDTO);
-     List<PlayerDto> getPlayersList(FilterDTO filterDTO, PlayerOrder playerOrder, Integer pageNumber, Integer pageSize);
+     List<PlayerDto> getPlayersList(FilterDTO filterDTO);
 
 
 }

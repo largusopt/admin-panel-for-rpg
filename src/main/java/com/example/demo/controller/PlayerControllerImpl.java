@@ -49,8 +49,8 @@ public class PlayerControllerImpl implements PlayerController {
         return playerMapper.toCreatePlayerResponseFromDTOPlayer(playerDto);
     }
 
-    public List<CreatePlayerResponse> getPlayersList(FilterDTO filterDTO, PlayerOrder playerOrder, Integer pageNumber, Integer pageSize){
-        return playerService.getPlayersList(filterDTO, playerOrder, pageNumber, pageSize).stream()
+    public List<CreatePlayerResponse> getPlayersList(FilterDTO filterDTO){
+        return playerService.getPlayersList(filterDTO).stream()
                 .map(playerDto -> playerMapper.toCreatePlayerResponseFromDTOPlayer(playerDto))
                 .collect(Collectors.toList());
     }

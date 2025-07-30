@@ -11,6 +11,6 @@
         </sql>
     </changeSet>
 
-    ПИШЕПМ МИГРАЦИИ ЧЕРЕЗ XML
+    ПИШЕМ МИГРАЦИИ ЧЕРЕЗ XML
 
 </databaseChangeLog>
