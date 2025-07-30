@@ -16,7 +16,7 @@ public interface PlayerController {
     CreatePlayerResponse createPlayer(@RequestBody @Valid CreatePlayerRequest createPlayerRequest);
 
     @GetMapping("/{id}")
-    CreatePlayerResponse getPlayer(@PathVariable("id") @Positive Long id);
+    ResponseEntity<CreatePlayerResponse> getPlayer(@PathVariable("id") @Positive Long id);
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deletePlayer(@PathVariable("id") @Positive Long id);

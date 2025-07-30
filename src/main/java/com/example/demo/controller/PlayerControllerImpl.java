@@ -24,9 +24,12 @@ public class PlayerControllerImpl implements PlayerController {
         return playerMapper.toCreatePlayerResponseFromDTOPlayer(newPlayerDto);
     }
 
-    public CreatePlayerResponse getPlayer(Long id){
+    public ResponseEntity<CreatePlayerResponse> getPlayer(Long id){
         PlayerDto playerDto = playerService.getPlayerById(id);
-        return playerMapper.toCreatePlayerResponseFromDTOPlayer(playerDto);
+        if (playerDto == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(playerMapper.toCreatePlayerResponseFromDTOPlayer(playerDto));
     }
 
     public ResponseEntity<Void> deletePlayer(Long id){

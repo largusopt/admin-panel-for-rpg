@@ -51,7 +51,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
     @Override
     public List<Player> getSortedPlayers(FilterDTO filterDTO, PlayerOrder order) {
          SqlBuilderResult sqlBuilderResult = buildFilteredQuery(filterDTO, order);
-         String sql = sqlBuilderResult.getSql().replaceAll("%fields%", "*");
+         String sql = sqlBuilderResult.getSql().replaceAll("%fields%", "id, name, title, race, profession, birthday, banned, experience, level, until_next_level");
          List<Object> clausesParams = sqlBuilderResult.getClausesParams();
          return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Player.class), clausesParams.toArray());
     }
@@ -67,7 +67,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
     @Override
     @Nullable
     public Player getPlayerById(long id){
-        String sql = "SELECT * FROM player WHERE id  = ?";
+        String sql = "SELECT id, name, title, race, profession, birthday, banned, experience, level, until_next_level FROM player WHERE id  = ?";
         return  jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Player.class), id);
     }
 
@@ -76,29 +76,33 @@ public class PlayerRepositoryImpl implements PlayerRepository {
         String sql = "UPDATE player SET ";
         List<Object> clausesParams = new ArrayList<>();
         List<String> clauses = new ArrayList<>();
-        if ( updateDTO.getName() != null){
+        if (updateDTO.getName() != null){
             clauses.add("name = ?");
             clausesParams.add(updateDTO.getName());
         }
-        if ( updateDTO.getTitle() != null){
+        if (updateDTO.getTitle() != null){
             clauses.add("title = ?");
             clausesParams.add(updateDTO.getTitle());
         }
-        if ( updateDTO.getExperience() != null){
+        if (updateDTO.getExperience() != null){
             clauses.add("experience = ?");
             clausesParams.add(updateDTO.getExperience());
         }
-        if ( updateDTO.getProfession() != null){
+        if (updateDTO.getProfession() != null){
             clauses.add("profession = ?");
             clausesParams.add(updateDTO.getProfession().toString());
         }
-        if ( updateDTO.getRace() != null){
+        if (updateDTO.getRace() != null){
             clauses.add("race = ?");
             clausesParams.add(updateDTO.getRace().toString());
         }
-        if ( updateDTO.getBanned() != null){
+        if (updateDTO.getBanned() != null){
             clauses.add("banned = ?");
             clausesParams.add(updateDTO.getBanned());
+        }
+        if (updateDTO.getBirthday() != null){
+            clauses.add("birthday = ?");
+            clausesParams.add(updateDTO.getBirthday());
         }
         clausesParams.add(id);
         sql = sql + String.join(", ", clauses) + " WHERE id = ?";
@@ -155,12 +159,12 @@ public class PlayerRepositoryImpl implements PlayerRepository {
             clauses.add("level <= ?");
             clausesParams.add(filterDTO.getMaxLevel());
         }
-         if (order != null){
-             sql = sql + " ORDER BY " + getOrderColumn(order);
-         }
         if (!clauses.isEmpty()) {
             sql = sql + " WHERE " + String.join(" AND ", clauses);
         }
+         if (order != null){
+             sql = sql + " ORDER BY " + getOrderColumn(order);
+         }
         return new SqlBuilderResult(sql,clausesParams);
     }
 
