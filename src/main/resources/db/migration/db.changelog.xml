@@ -1,16 +1,228 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<databaseChangeLog
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <include file="init.sql" relativeToChangelogFile="true"/>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="reset-player-id-seq" author="yourname">
-        <sql>
-            SELECT setval('player_id_seq', (SELECT COALESCE(MAX(id), 1) FROM player));
-        </sql>
+    <changeSet id="create-table" author="largusopt">
+    <preConditions onFail="MARK_RAN">
+        <not>
+            <tableExists tableName="player"/>
+        </not>
+    </preConditions>
+
+        <createTable tableName="player">
+            <column name = "id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name = "name" type="VARCHAR(12)" >
+                <constraints nullable="false"/>
+            </column>
+
+            <column name = "title" type="VARCHAR(30)" >
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="race" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name = "profession" type="VARCHAR(20)" >
+                <constraints nullable="false"/>
+            </column>
+
+            <column name = "birthday" type="DATE" >
+                <constraints nullable="false"/>
+            </column>
+
+            <column name = "banned" type="boolean" >
+                <constraints nullable="false"/>
+            </column>
+
+            <column name = "experience" type="int" >
+                <constraints nullable="false"/>
+            </column>
+
+            <column name = "level" type="int" >
+                <constraints nullable="false"/>
+            </column>
+
+            <column name = "until_next_level" type="int" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
 
-    ПИШЕМ МИГРАЦИИ ЧЕРЕЗ XML
+    <changeSet id="insert-players" author="largusopt">
+        <insert tableName="player">
+            <column name="name" value="Ниус"/>
+            <column name="title" value="Приходящий Без Шума"/>
+            <column name="race" value="HOBBIT"/>
+            <column name="profession" value="ROGUE"/>
+            <column name="birthday" value="2010-10-12"/>
+            <column name="banned" value="false"/>
+            <column name="experience" value="58347"/>
+            <column name="level" value="33"/>
+            <column name="until_next_level" value="1153"/>
+        </insert>
+
+        <insert tableName="player">
+            <column name="name" value="Никрашш"/>
+            <column name="title" value="НайтВульф"/>
+            <column name="race" value="ORC"/>
+            <column name="profession" value="WARLOCK"/>
+            <column name="birthday" value="2010-02-14"/>
+            <column name="banned" value="false"/>
+            <column name="experience" value="174403"/>
+            <column name="level" value="58"/>
+            <column name="until_next_level" value="2597"/>
+        </insert>
+
+        <insert tableName="player">
+            <column name="name" value="Эззэссэль"/>
+            <column name="title" value="шипящая"/>
+            <column name="race" value="DWARF"/>
+            <column name="profession" value="CLERIC"/>
+            <column name="birthday" value="2006-02-28"/>
+            <column name="banned" value="true"/>
+            <column name="experience" value="804"/>
+            <column name="level" value="3"/>
+            <column name="until_next_level" value="196"/>
+        </insert>
+
+        <insert tableName="player">
+            <column name="name" value="Бэлан"/>
+            <column name="title" value="Тсе Раа"/>
+            <column name="race" value="DWARF"/>
+            <column name="profession" value="ROGUE"/>
+            <column name="birthday" value="2008-02-25"/>
+            <column name="banned" value="true"/>
+            <column name="experience" value="44553"/>
+            <column name="level" value="29"/>
+            <column name="until_next_level" value="1947"/>
+        </insert>
+
+        <insert tableName="player">
+            <column name="name" value="Элеонора"/>
+            <column name="title" value="Бабушка"/>
+            <column name="race" value="HUMAN"/>
+            <column name="profession" value="SORCERER"/>
+            <column name="birthday" value="2006-01-07"/>
+            <column name="banned" value="true"/>
+            <column name="experience" value="63986"/>
+            <column name="level" value="35"/>
+            <column name="until_next_level" value="2614"/>
+        </insert>
+
+        <insert tableName="player">
+            <column name="name" value="Эман"/>
+            <column name="title" value="Ухастый Летун"/>
+            <column name="race" value="ELF"/>
+            <column name="profession" value="SORCERER"/>
+            <column name="birthday" value="2004-06-21"/>
+            <column name="banned" value="false"/>
+            <column name="experience" value="163743"/>
+            <column name="level" value="56"/>
+            <column name="until_next_level" value="1557"/>
+        </insert>
+
+        <insert tableName="player">
+            <column name="name" value="Талан"/>
+            <column name="title" value="Рожденный в Бронксе"/>
+            <column name="race" value="GIANT"/>
+            <column name="profession" value="ROGUE"/>
+            <column name="birthday" value="2005-05-15"/>
+            <column name="banned" value="false"/>
+            <column name="experience" value="68950"/>
+            <column name="level" value="36"/>
+            <column name="until_next_level" value="1350"/>
+        </insert>
+
+        <insert tableName="player">
+            <column name="name" value="Арилан"/>
+            <column name="title" value="Благотворитель"/>
+            <column name="race" value="ELF"/>
+            <column name="profession" value="SORCERER"/>
+            <column name="birthday" value="2006-08-10"/>
+            <column name="banned" value="false"/>
+            <column name="experience" value="61023"/>
+            <column name="level" value="34"/>
+            <column name="until_next_level" value="1977"/>
+        </insert>
+
+        <insert tableName="player">
+            <column name="name" value="Деракт"/>
+            <column name="title" value="Эльфёнок Красное Ухо"/>
+            <column name="race" value="ELF"/>
+            <column name="profession" value="ROGUE"/>
+            <column name="birthday" value="2010-06-22"/>
+            <column name="banned" value="false"/>
+            <column name="experience" value="156630"/>
+            <column name="level" value="55"/>
+            <column name="until_next_level" value="2970"/>
+        </insert>
+
+        <insert tableName="player">
+            <column name="name" value="Архилл"/>
+            <column name="title" value="Смертоносный"/>
+            <column name="race" value="GIANT"/>
+            <column name="profession" value="PALADIN"/>
+            <column name="birthday" value="2005-01-12"/>
+            <column name="banned" value="false"/>
+            <column name="experience" value="76010"/>
+            <column name="level" value="38"/>
+            <column name="until_next_level" value="1990"/>
+        </insert>
+
+        <insert tableName="player">
+            <column name="name" value="Эндарион"/>
+            <column name="title" value="Маленький эльфенок"/>
+            <column name="race" value="ELF"/>
+            <column name="profession" value="DRUID"/>
+            <column name="birthday" value="2001-04-24"/>
+            <column name="banned" value="false"/>
+            <column name="experience" value="103734"/>
+            <column name="level" value="45"/>
+            <column name="until_next_level" value="4366"/>
+        </insert>
+
+        <insert tableName="player">
+            <column name="name" value="Фаэрвин"/>
+            <column name="title" value="Темный Идеолог"/>
+            <column name="race" value="HUMAN"/>
+            <column name="profession" value="NAZGUL"/>
+            <column name="birthday" value="2010-09-06"/>
+            <column name="banned" value="false"/>
+            <column name="experience" value="7903"/>
+            <column name="level" value="12"/>
+            <column name="until_next_level" value="1197"/>
+        </insert>
+
+        <insert tableName="player">
+            <column name="name" value="Харидин"/>
+            <column name="title" value="Бедуин"/>
+            <column name="race" value="TROLL"/>
+            <column name="profession" value="WARRIOR"/>
+            <column name="birthday" value="2009-09-08"/>
+            <column name="banned" value="false"/>
+            <column name="experience" value="114088"/>
+            <column name="level" value="47"/>
+            <column name="until_next_level" value="3512"/>
+        </insert>
+
+        <insert tableName="player">
+            <column name="name" value="Джур"/>
+            <column name="title" value="БоРец с жАжДой"/>
+            <column name="race" value="ORC"/>
+            <column name="profession" value="DRUID"/>
+            <column name="birthday" value="2009-07-14"/>
+            <column name="banned" value="false"/>
+            <column name="experience" value="29573"/>
+            <column name="level" value="23"/>
+            <column name="until_next_level" value="427"/>
+        </insert>
+
+    </changeSet>
 
 </databaseChangeLog>
