@@ -4,13 +4,16 @@ import com.example.demo.entity.Profession;
 import com.example.demo.entity.Race;
 import lombok.*;
 
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
 
 @Data
-@NoArgsConstructor
+@Entity
+//@Table(name = "player")
 public class Player {
-    @Positive
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
@@ -30,6 +33,8 @@ public class Player {
     private Integer experience;
 
     private Integer level;
+
+    @Column(name = "until_next_level")
     private Integer untilNextLevel;
 
     private Date birthday;

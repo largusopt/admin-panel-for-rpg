@@ -1,17 +1,10 @@
 package com.example.demo.repository;
 
-import com.example.demo.DTO.FilterDTO;
-import com.example.demo.DTO.UpdateDTO;
-import com.example.demo.filter.PlayerOrder;
 import com.example.demo.model.Player;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public interface PlayerRepository{
-    Player addPlayer(Player player);
-    boolean deletePlayer(Long id);
-    Player getPlayerById(long id);
-    List<Player> getSortedPlayers(FilterDTO filterDTO, PlayerOrder order);
-    Integer getPlayersCount(FilterDTO filterDTO, PlayerOrder order);
-    Player updatePlayer (Long id, UpdateDTO updateDTO);
+@Repository
+public interface PlayerRepository extends JpaRepository<Player, Long>, JpaSpecificationExecutor<Player> {
 }

@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.DTO.*;
 import com.example.demo.service.PlayerMapper;
-import com.example.demo.filter.PlayerOrder;
 import com.example.demo.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,7 +39,7 @@ public class PlayerControllerImpl implements PlayerController {
         return ResponseEntity.ok().build();
     }
 
-    public Integer getPlayersCount(/*@RequestParam*/ FilterDTO filterDTO) {
+    public long getPlayersCount(/*@RequestParam*/ FilterDTO filterDTO) {
         return playerService.getPlayersCount(filterDTO);
     }
 

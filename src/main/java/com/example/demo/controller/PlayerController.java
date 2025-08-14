@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.DTO.*;
-import com.example.demo.filter.PlayerOrder;
-import com.example.demo.model.Player;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +20,7 @@ public interface PlayerController {
     ResponseEntity<Void> deletePlayer(@PathVariable("id") @Positive Long id);
 
     @GetMapping("/count")
-    Integer getPlayersCount(/*@RequestParam*/ FilterDTO filterDTO);
+    long getPlayersCount(/*@RequestParam*/ FilterDTO filterDTO);
 
     @PostMapping("/{id}")
     CreatePlayerResponse updatePlayer (@PathVariable("id") @Positive Long id, @RequestBody UpdateDTO updateDTO);
