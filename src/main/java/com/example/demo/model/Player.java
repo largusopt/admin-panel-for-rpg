@@ -24,8 +24,10 @@ public class Player {
     @Size(min = 1, max = 30)
     private String title;
 
+    @Enumerated(EnumType.STRING)
     private Race race;
 
+    @Enumerated(EnumType.STRING)
     private Profession profession;
 
     @Min(0)

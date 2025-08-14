@@ -32,11 +32,11 @@ public class PlayerSpecification implements Specification<Player> {
         }
 
         if (filterDTO.getRace() != null) {
-            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("race"), filterDTO.getRace().name()));
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("race"), filterDTO.getRace()));
         }
 
         if (filterDTO.getProfession() != null) {
-            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("profession"), filterDTO.getProfession().name()));
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("profession"), filterDTO.getProfession()));
         }
 
         if (filterDTO.getAfter() != null) {
