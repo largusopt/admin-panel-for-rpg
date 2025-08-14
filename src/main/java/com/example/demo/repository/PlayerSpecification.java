@@ -31,8 +31,12 @@ public class PlayerSpecification implements Specification<Player> {
             predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("banned"), filterDTO.getBanned()));
         }
 
+        if (filterDTO.getRace() != null) {
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("race"), filterDTO.getRace().name()));
+        }
+
         if (filterDTO.getProfession() != null) {
-            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("profession"), filterDTO.getProfession()));
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("profession"), filterDTO.getProfession().name()));
         }
 
         if (filterDTO.getAfter() != null) {

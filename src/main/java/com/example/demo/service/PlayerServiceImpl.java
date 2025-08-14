@@ -86,7 +86,7 @@ public class PlayerServiceImpl implements PlayerService {
     public List<PlayerDto> getPlayersList(FilterDTO filterDTO) {
 
         List<Player> playersList = playerRepository
-                .findAll(new PlayerSpecification(filterDTO), PageRequest.of(filterDTO.getPageNumber(), filterDTO.getPageSize(), Sort.by(filterDTO.getOrder().name())))
+                .findAll(new PlayerSpecification(filterDTO), PageRequest.of(filterDTO.getPageNumber(), filterDTO.getPageSize(), Sort.by(filterDTO.getOrder().getFieldName())))
                 .getContent();
 
         return playersList.stream()
