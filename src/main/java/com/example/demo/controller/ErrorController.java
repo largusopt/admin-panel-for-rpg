@@ -26,6 +26,7 @@ public class ErrorController {
     }
 
     @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleMethodArgumentNotValidException(final MethodArgumentNotValidException exception) {
         Map<String, String> errors = new HashMap<>();
 
